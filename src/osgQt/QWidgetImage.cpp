@@ -11,6 +11,7 @@
  * OpenSceneGraph Public License for more details.
 */
 
+#include <osg/GL>
 #include <osgQt/QWidgetImage>
 #include <QLayout>
 

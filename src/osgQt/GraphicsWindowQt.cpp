@@ -11,6 +11,7 @@
  * OpenSceneGraph Public License for more details.
 */
 
+#include <osg/GL>
 #include <osg/DeleteHandler>
 #include <osgQt/GraphicsWindowQt>
 #include <osgViewer/ViewerBase>
@@ -537,6 +538,7 @@ bool GraphicsWindowQt::init( QWidget* parent, const QGLWidget* shareWidget, Qt::
 
         // create widget
         _widget = new GLWidget( traits2qglFormat( _traits.get() ), parent, shareWidget, flags );
+        QGLFormat::OpenGLVersionFlags v = QGLFormat::openGLVersionFlags();
     }
 
     // set widget name and position
@@ -596,6 +598,10 @@ QGLFormat GraphicsWindowQt::traits2qglFormat( const osg::GraphicsContext::Traits
     format.setDoubleBuffer( traits->doubleBuffer );
     format.setSwapInterval( traits->vsync ? 1 : 0 );
     format.setStereo( traits->quadBufferStereo ? 1 : 0 );
+#ifdef OSG_GL3_AVAILABLE
+    format.setVersion(3,2);
+    format.setProfile(QGLFormat::CoreProfile);
+#endif
 
     return format;
 }
