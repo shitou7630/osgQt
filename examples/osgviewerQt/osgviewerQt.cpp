@@ -11,6 +11,8 @@
 
 #include <osgQt/GraphicsWindowQt>
 
+#include <QtWebEngineWidgets/QtWebEngineWidgets>
+
 #include <iostream>
 
 class ViewerWidget : public QWidget, public osgViewer::CompositeViewer
@@ -26,7 +28,13 @@ public:
         QWidget* widget1 = addViewWidget( createGraphicsWindow(0,0,100,100), osgDB::readRefNodeFile("cow.osgt") );
         QWidget* widget2 = addViewWidget( createGraphicsWindow(0,0,100,100), osgDB::readRefNodeFile("glider.osgt") );
         QWidget* widget3 = addViewWidget( createGraphicsWindow(0,0,100,100), osgDB::readRefNodeFile("axes.osgt") );
+#if 0
         QWidget* widget4 = addViewWidget( createGraphicsWindow(0,0,100,100), osgDB::readRefNodeFile("fountain.osgt") );
+#else
+
+        QWebEngineView* widget4 = new QWebEngineView();
+        widget4->load(QUrl(QLatin1String("http://google.fr")));
+#endif
         QWidget* popupWidget = addViewWidget( createGraphicsWindow(900,100,320,240,"Popup window",true), osgDB::readRefNodeFile("dumptruck.osgt") );
         popupWidget->show();
 

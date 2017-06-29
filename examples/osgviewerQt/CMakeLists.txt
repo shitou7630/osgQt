@@ -25,6 +25,6 @@ ENDIF()
 SETUP_EXAMPLE( ${EXAMPLE_NAME} )
 
 IF ( Qt5Widgets_FOUND )
-    qt5_use_modules( example_${EXAMPLE_NAME} Widgets OpenGL )
+    qt5_use_modules( example_${EXAMPLE_NAME} Widgets OpenGL WebEngineWidgets)
 ENDIF( Qt5Widgets_FOUND )
 
