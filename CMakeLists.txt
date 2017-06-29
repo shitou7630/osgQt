@@ -125,10 +125,29 @@ IF(APPLE)
   ENDIF()
 ENDIF()
 
-PROJECT(osgQt)
+PROJECT(osgQt LANGUAGES CXX)
 
-FIND_PACKAGE(OpenSceneGraph 3.5.6 REQUIRED osgDB osgGA osgUtil osgText osgViewer osgWidget)
-SET(OPENSCENEGRAPH_SOVERSION 145)
+
+if( EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    message(STATUS "*****************")
+    message(STATUS "* CONAN ENABLED *")
+    message(STATUS "*****************")
+    if(APPLE)
+        set(CONAN_DISABLE_CHECK_COMPILER True)
+    endif()
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    CONAN_BASIC_SETUP()
+    set(CMAKE_MODULE_PATH ${CONAN_CMAKE_MODULE_PATH} ${CMAKE_MODULE_PATH})
+    set(CMAKE_PREFIX_PATH ${CONAN_CMAKE_MODULE_PATH} ${CMAKE_PREFIX_PATH})
+    set(CONAN True)
+endif()
+
+if(CONAN)
+  FIND_PACKAGE(OpenSceneGraph REQUIRED osgDB osgGA osgUtil osgText osgViewer osgWidget)
+else()
+  FIND_PACKAGE(OpenSceneGraph 3.5.6 REQUIRED osgDB osgGA osgUtil osgText osgViewer osgWidget)
+  SET(OPENSCENEGRAPH_SOVERSION 145)
+endif()
 
 SET(OSG_PLUGINS osgPlugins-${OPENSCENEGRAPH_VERSION})
 
@@ -1005,4 +1024,3 @@ ADD_CUSTOM_TARGET(uninstall
   "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
 
 #
-
