@@ -16,6 +16,7 @@
 
 #include <osgViewer/GraphicsWindow>
 #include <osgQt/Export>
+#include <osg/Version>
 
 #include <QMutex>
 #include <QEvent>
